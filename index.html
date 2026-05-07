@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karya Ilmiah Paus – Kelompok Paus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #020d1a;
+      --deep: #041828;
+      --ocean: #0a3352;
+      --teal: #0e7c7b;
+      --aqua: #17c3b2;
+      --foam: #c8f0ee;
+      --gold: #f5c842;
+      --light: #e8f4f8;
+      --white: #ffffff;
+      --text: #cde4ed;
+      --muted: #6a99b0;
+    }
+
+    *, *::before, *::after {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* === CUSTOM SCROLLBAR === */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--deep); }
+    ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+    /* === OCEAN CANVAS BG === */
+    #ocean-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 120% 60% at 50% 100%, #0a3352aa 0%, transparent 70%),
+        radial-gradient(ellipse 80% 40% at 20% 80%, #0e7c7b33 0%, transparent 60%),
+        linear-gradient(180deg, #020d1a 0%, #041828 50%, #020d1a 100%);
+    }
+
+    /* Animated bubbles */
+    .bubble {
+      position: fixed;
+      bottom: -80px;
+      border-radius: 50%;
+      background: rgba(23, 195, 178, 0.12);
+      border: 1px solid rgba(23, 195, 178, 0.2);
+      animation: rise linear infinite;
+      z-index: 0;
+    }
+    .bubble:nth-child(1)  { width:18px; height:18px; left:10%; animation-duration:12s; animation-delay:0s; }
+    .bubble:nth-child(2)  { width:10px; height:10px; left:22%; animation-duration:9s;  animation-delay:2s; }
+    .bubble:nth-child(3)  { width:24px; height:24px; left:35%; animation-duration:14s; animation-delay:4s; }
+    .bubble:nth-child(4)  { width:8px;  height:8px;  left:52%; animation-duration:10s; animation-delay:1s; }
+    .bubble:nth-child(5)  { width:14px; height:14px; left:65%; animation-duration:11s; animation-delay:3s; }
+    .bubble:nth-child(6)  { width:20px; height:20px; left:78%; animation-duration:13s; animation-delay:5s; }
+    .bubble:nth-child(7)  { width:6px;  height:6px;  left:90%; animation-duration:8s;  animation-delay:2s; }
+
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1);   opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) scale(0.6); opacity: 0; }
+    }
+
+    /* === WRAPPER === */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 160px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 160'%3E%3Cpath fill='%23041828' d='M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,80C672,64,768,64,864,80C960,96,1056,128,1152,128C1248,128,1344,96,1392,80L1440,64L1440,160L0,160Z'/%3E%3C/svg%3E") center/cover no-repeat;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(23,195,178,0.15);
+      border: 1px solid rgba(23,195,178,0.4);
+      color: var(--aqua);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      padding: 7px 18px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      animation: fadeDown 0.9s ease 0.1s both;
+    }
+
+    .hero h1 span {
+      color: var(--aqua);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      font-weight: 300;
+      animation: fadeDown 0.9s ease 0.2s both;
+    }
+
+    .hero-members {
+      margin-top: 32px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeDown 0.9s ease 0.3s both;
+    }
+
+    .member-chip {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--light);
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-scroll {
+      margin-top: 60px;
+      animation: fadeDown 1s ease 0.5s both;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--aqua), transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 0.4; } 50% { opacity: 1; }
+    }
+
+    /* === WHALE SVG HERO ART === */
+    .whale-art {
+      width: min(520px, 90vw);
+      margin: 36px auto 0;
+      animation: float 6s ease-in-out infinite, fadeDown 1s ease 0.4s both;
+      filter: drop-shadow(0 20px 60px rgba(23,195,178,0.3));
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0px) rotate(-1deg); }
+      50%      { transform: translateY(-18px) rotate(1deg); }
+    }
+
+    /* === NAV === */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4,24,40,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(23,195,178,0.15);
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--aqua);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: all 0.25s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover {
+      color: var(--aqua);
+      background: rgba(23,195,178,0.1);
+    }
+
+    /* === MAIN CONTAINER === */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* === SECTION CARDS === */
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+      border: 1px solid rgba(23,195,178,0.12);
+      border-radius: 24px;
+      padding: 40px 44px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--aqua), var(--gold));
+      border-radius: 24px 24px 0 0;
+    }
+
+    .card:hover {
+      border-color: rgba(23,195,178,0.3);
+      transform: translateY(-3px);
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--aqua);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(23,195,178,0.2);
+    }
+
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--aqua);
+      margin: 28px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card h3::before {
+      content: '';
+      width: 20px; height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .card p {
+      color: var(--text);
+      line-height: 1.85;
+      font-weight: 300;
+      font-size: 0.97rem;
+    }
+
+    /* === NUMBERED LIST === */
+    .fancy-ol {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .fancy-ol li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 20px;
+      background: rgba(23,195,178,0.05);
+      border: 1px solid rgba(23,195,178,0.1);
+      border-radius: 14px;
+      transition: background 0.25s, border-color 0.25s;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .fancy-ol li:hover {
+      background: rgba(23,195,178,0.1);
+      border-color: rgba(23,195,178,0.25);
+    }
+
+    .li-num {
+      min-width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--teal), var(--aqua));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--navy);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* === BULLET LIST === */
+    .fancy-ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fancy-ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .fancy-ul li::before {
+      content: '◆';
+      color: var(--gold);
+      font-size: 0.6rem;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    /* === STAT CARDS === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .stat-card {
+      background: rgba(23,195,178,0.06);
+      border: 1px solid rgba(23,195,178,0.15);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .stat-card:hover {
+      background: rgba(23,195,178,0.12);
+      transform: translateY(-4px);
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--aqua);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* === THREAT CARDS === */
+    .threat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .threat-card {
+      padding: 22px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .threat-card:hover { transform: translateY(-4px); }
+
+    .threat-card.red   { background: rgba(255,75,75,0.08); border-color: rgba(255,75,75,0.2); }
+    .threat-card.amber { background: rgba(245,200,66,0.08); border-color: rgba(245,200,66,0.2); }
+    .threat-card.blue  { background: rgba(23,195,178,0.08); border-color: rgba(23,195,178,0.2); }
+    .threat-card.purple{ background: rgba(160,80,200,0.08); border-color: rgba(160,80,200,0.2); }
+
+    .threat-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .threat-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .threat-desc {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* === CONSERVATION STEPS === */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 20px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--teal), var(--aqua), transparent);
+    }
+
+    .step {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 16px 0 16px 0;
+    }
+
+    .step-dot {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--ocean);
+      border: 2px solid var(--aqua);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-body { padding-top: 8px; }
+    .step-title {
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+      font-size: 0.98rem;
+    }
+    .step-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* === CONCLUSION HIGHLIGHT === */
+    .conclusion-highlight {
+      background: linear-gradient(135deg, rgba(14,124,123,0.2), rgba(23,195,178,0.1));
+      border: 1px solid rgba(23,195,178,0.3);
+      border-radius: 16px;
+      padding: 28px;
+      margin-top: 16px;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--light);
+      position: relative;
+    }
+
+    .conclusion-highlight::before {
+      content: '"';
+      position: absolute;
+      top: -10px; left: 20px;
+      font-size: 6rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--aqua);
+      opacity: 0.25;
+      line-height: 1;
+    }
+
+    /* === REFERENCES === */
+    .ref-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .ref-item {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      transition: all 0.25s;
+    }
+
+    .ref-item:hover {
+      background: rgba(23,195,178,0.07);
+      border-color: rgba(23,195,178,0.2);
+    }
+
+    .ref-icon {
+      width: 40px; height: 40px;
+      background: rgba(23,195,178,0.12);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .ref-name { font-weight: 600; font-size: 0.93rem; color: var(--white); }
+    .ref-type { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    /* === LEARN MORE BTN === */
+    .btn-aqua {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 13px 28px;
+      background: linear-gradient(135deg, var(--teal), var(--aqua));
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.93rem;
+      text-decoration: none;
+      border-radius: 100px;
+      transition: all 0.3s;
+      box-shadow: 0 8px 32px rgba(23,195,178,0.3);
+    }
+
+    .btn-aqua:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(23,195,178,0.45);
+    }
+
+    /* === DIVIDER === */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0 24px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: var(--deep);
+      border-top: 1px solid rgba(23,195,178,0.12);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-whale { font-size: 2.5rem; margin-bottom: 12px; }
+    .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .footer-sub { font-size: 0.83rem; color: var(--muted); }
+    .footer-line {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 640px) {
+      .card { padding: 28px 24px; }
+      .nav-links { display: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .threat-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.6rem; }
+    }
+
+    /* === FADE IN ON SCROLL === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Ocean background -->
+<div id="ocean-bg"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+
+<div class="wrapper">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🔬 Karya Ilmiah &nbsp;·&nbsp; 2026</div>
+  <h1>Kehidupan &amp; Peran<br><span>Paus</span> di Lautan</h1>
+  <p class="hero-sub">Penelitian Singkat Mengenai Mamalia Laut Terbesar di Dunia</p>
+  <div class="hero-members">
+    <span class="member-chip">🐋 Kelompok Paus</span>
+    <span class="member-chip">Rafa</span>
+    <span class="member-chip">Faisal</span>
+    <span class="member-chip">Satrio</span>
+  </div>
+
+  <!-- Whale SVG Illustration -->
+  <svg class="whale-art" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <!-- Water ripples -->
+    <ellipse cx="260" cy="220" rx="200" ry="18" fill="rgba(23,195,178,0.08)"/>
+    <ellipse cx="260" cy="225" rx="140" ry="10" fill="rgba(23,195,178,0.05)"/>
+    <!-- Tail -->
+    <path d="M420 155 Q460 120 490 100 Q475 140 490 165 Q460 155 420 155Z" fill="#0e7c7b"/>
+    <path d="M420 155 Q460 170 490 190 Q475 160 490 165" fill="#0a5a59"/>
+    <!-- Body -->
+    <ellipse cx="260" cy="155" rx="170" ry="62" fill="#0e7c7b"/>
+    <!-- Belly -->
+    <ellipse cx="220" cy="170" rx="110" ry="28" fill="#17c3b2" opacity="0.35"/>
+    <!-- Eye -->
+    <circle cx="128" cy="145" r="10" fill="#020d1a"/>
+    <circle cx="128" cy="145" r="6" fill="#041828"/>
+    <circle cx="126" cy="143" r="2" fill="white"/>
+    <!-- Mouth curve -->
+    <path d="M90 158 Q115 168 138 162" stroke="#0a5a59" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Pectoral fin -->
+    <path d="M190 195 Q230 230 200 215 Q195 200 190 195Z" fill="#0a5a59"/>
+    <!-- Blow hole -->
+    <ellipse cx="155" cy="105" rx="12" ry="5" fill="#0a5a59"/>
+    <!-- Water spout -->
+    <path d="M150 100 Q145 70 148 45 Q155 30 162 45 Q165 70 160 100" fill="rgba(23,195,178,0.4)" stroke="rgba(23,195,178,0.6)" stroke-width="1"/>
+    <path d="M155 40 Q148 20 152 10 Q156 5 160 10 Q164 20 157 40" fill="rgba(23,195,178,0.3)"/>
+    <!-- Water splashes -->
+    <circle cx="80" cy="210" r="3" fill="rgba(23,195,178,0.5)"/>
+    <circle cx="380" cy="215" r="2" fill="rgba(23,195,178,0.4)"/>
+    <circle cx="320" cy="208" r="2.5" fill="rgba(23,195,178,0.35)"/>
+  </svg>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">🐋 Karya Ilmiah Paus</a>
+    <div class="nav-links">
+      <a href="#rumusan">Rumusan</a>
+      <a href="#pendahuluan">Pendahuluan</a>
+      <a href="#pembahasan">Pembahasan</a>
+      <a href="#kesimpulan">Kesimpulan</a>
+      <a href="#referensi">Referensi</a>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <!-- RUMUSAN MASALAH -->
+  <div class="card reveal" id="rumusan">
+    <div class="section-label">01 — Rumusan Masalah</div>
+    <h2>Pertanyaan Penelitian</h2>
+    <ol class="fancy-ol">
+      <li><div class="li-num">01</div><div>Apa yang dimaksud dengan paus dan bagaimana ciri-ciri utamanya?</div></li>
+      <li><div class="li-num">02</div><div>Bagaimana habitat serta pola kehidupan paus di lautan?</div></li>
+      <li><div class="li-num">03</div><div>Apa saja ancaman yang menyebabkan penurunan populasi paus?</div></li>
+      <li><div class="li-num">04</div><div>Bagaimana peran paus dalam menjaga keseimbangan ekosistem laut?</div></li>
+      <li><div class="li-num">05</div><div>Upaya apa saja yang dapat dilakukan manusia untuk melestarikan paus?</div></li>
+    </ol>
+  </div>
+
+  <!-- TUJUAN -->
+  <div class="card reveal" id="tujuan">
+    <div class="section-label">02 — Tujuan Penelitian</div>
+    <h2>Tujuan Penelitian</h2>
+    <ol class="fancy-ol">
+      <li><div class="li-num">01</div><div>Mengetahui pengertian dan ciri-ciri paus sebagai mamalia laut.</div></li>
+      <li><div class="li-num">02</div><div>Memahami habitat dan perilaku paus di berbagai samudra dunia.</div></li>
+      <li><div class="li-num">03</div><div>Menjelaskan ancaman terhadap keberlangsungan hidup dan populasi paus.</div></li>
+      <li><div class="li-num">04</div><div>Mengetahui pentingnya peran paus bagi keseimbangan ekosistem laut.</div></li>
+      <li><div class="li-num">05</div><div>Meningkatkan kesadaran masyarakat tentang pelestarian paus.</div></li>
+    </ol>
+  </div>
+
+  <!-- PENDAHULUAN -->
+  <div class="card reveal" id="pendahuluan">
+    <div class="section-label">03 — Pendahuluan</div>
+    <h2>Latar Belakang</h2>
+    <p>
+      Paus merupakan mamalia laut terbesar di dunia yang memiliki peran vital dalam menjaga keseimbangan ekosistem samudra.
+      Berbeda dengan ikan, paus bernapas menggunakan paru-paru dan melahirkan anaknya secara langsung — menjadikannya salah satu
+      makhluk paling luar biasa di planet ini.
+    </p>
+    <p style="margin-top:14px;">
+      Hewan megah ini menghuni hampir seluruh perairan bumi, dari lautan tropis yang hangat hingga es Arktik yang membeku.
+      Populasinya yang terus menurun akibat aktivitas manusia menjadikan penelitian dan upaya pelestarian paus menjadi sangat mendesak.
+    </p>
+
+    <div class="stats-grid" style="margin-top:28px;">
+      <div class="stat-card">
+        <div class="stat-num">90+</div>
+        <div class="stat-label">Spesies Paus di seluruh dunia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">30m</div>
+        <div class="stat-label">Panjang paus biru, hewan terbesar</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">200t</div>
+        <div class="stat-label">Berat paus biru dewasa</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">80th</div>
+        <div class="stat-label">Rata-rata usia paus di alam liar</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEMBAHASAN -->
+  <div class="card reveal" id="pembahasan">
+    <div class="section-label">04 — Pembahasan</div>
+    <h2>Isi &amp; Analisis</h2>
+
+    <div class="divider">Ciri-ciri Fisik</div>
+    <ul class="fancy-ul">
+      <li>Bernapas menggunakan paru-paru melalui lubang napas (blowhole) di atas kepala.</li>
+      <li>Melahirkan dan menyusui anaknya — ciri khas mamalia sejati.</li>
+      <li>Memiliki ukuran tubuh yang sangat besar; paus biru adalah hewan terbesar yang pernah ada di Bumi.</li>
+      <li>Tubuh streamline dengan sirip dada (pectoral fins) dan ekor horizontal (flukes) untuk berenang efisien.</li>
+      <li>Memiliki lapisan lemak tebal (blubber) sebagai insulasi terhadap air dingin.</li>
+      <li>Beberapa spesies memiliki gigi (paus bergigi) dan beberapa memiliki baleen untuk menyaring plankton.</li>
+    </ul>
+
+    <div class="divider" style="margin-top:32px;">Habitat &amp; Perilaku</div>
+    <p>
+      Paus hidup di seluruh samudra dunia, dari Samudra Arktik dan Antartika yang dingin hingga perairan tropis yang hangat.
+      Banyak spesies melakukan migrasi spektakuler sejauh ribuan kilometer setiap tahun — misalnya paus bungkuk (humpback whale)
+      yang bermigrasi dari perairan Antartika menuju lautan tropis untuk berkembang biak.
+    </p>
+    <p style="margin-top:12px;">
+      Paus juga dikenal karena kecerdasan sosialnya yang tinggi. Mereka berkomunikasi menggunakan nyanyian kompleks yang dapat
+      berjalan ribuan kilometer di bawah laut. Paus sperma, misalnya, menggunakan echolocation untuk berburu di kedalaman laut.
+    </p>
+  </div>
+
+  <!-- ANCAMAN -->
+  <div class="card reveal">
+    <div class="section-label">04b — Ancaman</div>
+    <h2>Ancaman Terhadap Paus</h2>
+    <p>Populasi paus terus menurun akibat berbagai tekanan dari aktivitas manusia dan perubahan lingkungan global.</p>
+    <div class="threat-grid">
+      <div class="threat-card red">
+        <span class="threat-icon">⚓</span>
+        <div class="threat-title">Perburuan Liar</div>
+        <div class="threat-desc">Perburuan paus komersial selama abad ke-20 hampir memusnahkan banyak spesies besar.</div>
+      </div>
+      <div class="threat-card amber">
+        <span class="threat-icon">🏭</span>
+        <div class="threat-title">Pencemaran Laut</div>
+        <div class="threat-desc">Limbah industri, tumpahan minyak, dan polutan kimia merusak habitat dan rantai makanan paus.</div>
+      </div>
+      <div class="threat-card blue">
+        <span class="threat-icon">🌡️</span>
+        <div class="threat-title">Perubahan Iklim</div>
+        <div class="threat-desc">Pemanasan laut mengubah distribusi krill dan plankton yang menjadi makanan utama paus.</div>
+      </div>
+      <div class="threat-card purple">
+        <span class="threat-icon">🛢️</span>
+        <div class="threat-title">Sampah Plastik</div>
+        <div class="threat-desc">Paus banyak ditemukan mati akibat menelan plastik yang menyumbat sistem pencernaan mereka.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERAN EKOSISTEM -->
+  <div class="card reveal">
+    <div class="section-label">04c — Ekosistem</div>
+    <h2>Peran Paus dalam Ekosistem</h2>
+    <ul class="fancy-ul">
+      <li>Kotoran paus yang kaya nutrisi memfertilisasi permukaan laut dan mendukung pertumbuhan fitoplankton.</li>
+      <li>Fitoplankton menghasilkan lebih dari 50% oksigen di atmosfer bumi — paus secara tidak langsung mendukung kehidupan manusia.</li>
+      <li>Bangkai paus (whale fall) di dasar laut menciptakan ekosistem baru yang menopang ratusan spesies selama puluhan tahun.</li>
+      <li>Paus membantu mengatur siklus karbon laut dengan memindahkan karbon dari permukaan ke kedalaman samudra.</li>
+      <li>Sebagai predator puncak, paus menjaga keseimbangan populasi mangsa dalam rantai makanan laut.</li>
+    </ul>
+  </div>
+
+  <!-- UPAYA PELESTARIAN -->
+  <div class="card reveal">
+    <div class="section-label">04d — Pelestarian</div>
+    <h2>Upaya Pelestarian</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot">🚫</div>
+        <div class="step-body">
+          <div class="step-title">Larangan Perburuan Internasional</div>
+          <div class="step-desc">IWC (International Whaling Commission) memberlakukan moratorium perburuan paus komersial sejak 1986.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">🏞️</div>
+        <div class="step-body">
+          <div class="step-title">Kawasan Perlindungan Laut</div>
+          <div class="step-desc">Marine Protected Areas (MPA) dibentuk untuk melindungi habitat kritis tempat paus membesarkan anaknya.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">🔬</div>
+        <div class="step-body">
+          <div class="step-title">Penelitian &amp; Monitoring</div>
+          <div class="step-desc">Organisasi seperti WWF dan NOAA memantau populasi paus dengan teknologi satelit dan akustik bawah laut.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">♻️</div>
+        <div class="step-body">
+          <div class="step-title">Pengurangan Polusi Plastik</div>
+          <div class="step-desc">Kampanye global mengurangi plastik sekali pakai dan membersihkan sampah dari lautan dunia.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">📣</div>
+        <div class="step-body">
+          <div class="step-title">Edukasi Publik</div>
+          <div class="step-desc">Meningkatkan kesadaran masyarakat melalui program edukasi, wisata bahari bertanggung jawab, dan media.</div>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://id.wikipedia.org/wiki/Paus_(hewan)" target="_blank" class="btn-aqua">
+      🔗 Pelajari Lebih Lanjut
+    </a>
+  </div>
+
+  <!-- KESIMPULAN -->
+  <div class="card reveal" id="kesimpulan">
+    <div class="section-label">05 — Kesimpulan</div>
+    <h2>Kesimpulan</h2>
+    <div class="conclusion-highlight">
+      Paus bukan sekadar hewan laut biasa — mereka adalah pilar ekosistem samudra yang menopang kehidupan di seluruh planet.
+      Setiap tindakan yang merusak habitat paus berdampak langsung pada keseimbangan alam dan bahkan kualitas udara yang kita hirup.
+      Oleh karena itu, upaya pelestarian paus adalah tanggung jawab bersama seluruh umat manusia.
+    </div>
+    <p style="margin-top:20px;">
+      Melalui penelitian ini, kita memahami bahwa melindungi paus berarti melindungi lautan, dan melindungi lautan berarti
+      melindungi masa depan bumi. Langkah sederhana seperti mengurangi penggunaan plastik, mendukung produk ramah lingkungan,
+      dan menyebarkan informasi tentang pentingnya paus dapat membuat perbedaan nyata.
+    </p>
+  </div>
+
+  <!-- REFERENSI -->
+  <div class="card reveal" id="referensi">
+    <div class="section-label">06 — Referensi</div>
+    <h2>Sumber Referensi</h2>
+    <div class="ref-list">
+      <div class="ref-item">
+        <div class="ref-icon">📖</div>
+        <div>
+          <div class="ref-name">Wikipedia Indonesia – Paus (Hewan)</div>
+          <div class="ref-type">Ensiklopedia Daring · id.wikipedia.org</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-icon">🌍</div>
+        <div>
+          <div class="ref-name">National Geographic – Whale Species Guide</div>
+          <div class="ref-type">Media Sains &amp; Alam · nationalgeographic.com</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-icon">🐠</div>
+        <div>
+          <div class="ref-name">WWF – Marine Conservation Program</div>
+          <div class="ref-type">Organisasi Konservasi Internasional · wwf.org</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-icon">🔬</div>
+        <div>
+          <div class="ref-name">NOAA Fisheries – Whale Research</div>
+          <div class="ref-type">Lembaga Oseanografi &amp; Perikanan · fisheries.noaa.gov</div>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-icon">⚖️</div>
+        <div>
+          <div class="ref-name">IWC – International Whaling Commission</div>
+          <div class="ref-type">Komisi Pengelolaan Paus Internasional · iwc.int</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-whale">🐋</div>
+  <div class="footer-title">Karya Ilmiah Tentang Paus</div>
+  <div class="footer-sub">Rafa · Faisal · Satrio &nbsp;|&nbsp; Kelompok Paus</div>
+  <div class="footer-line">© 2026 Karya Ilmiah Paus &nbsp;·&nbsp; Dibuat dengan HTML, CSS &amp; ❤️</div>
+</footer>
+
+</div><!-- end wrapper -->
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--aqua)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
